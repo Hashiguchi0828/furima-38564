@@ -1,32 +1,32 @@
 # README
 
 # users
-| Column             | Type    | Options         |
-| ------------------ | ------- | --------------- |
-| nickname           | string  | null: false     |
-| email              | string  | null: false     |
-| encrypted_password | string  | null: false     |
-| family_name        | string  | null: false     |
-| first_name         | string  | null: false     |
-| family_name_kana   | string  | null: false     |
-| first_name_kana    | string  | null: false     |
-| birth_day          | date    | null: false     |
+| Column             | Type    | Options                   |
+| ------------------ | ------- | ------------------------- |
+| nickname           | string  | null: false               |
+| email              | string  | null: false, unique: true |
+| encrypted_password | string  | null: false               |
+| family_name        | string  | null: false               |
+| first_name         | string  | null: false               |
+| family_name_kana   | string  | null: false               |
+| first_name_kana    | string  | null: false               |
+| birth_day          | date    | null: false               |
 
 has_many :items
-has_many :buyer
+has_many :buyers
 
 
 # items
 | Column            | Type    | Options     |
 | ----------------- | ------- | ----------- |
 | name              | string  | null: false |
-| description       | string  | null: false |
-| category_id       | string  | null: false |
-| status            | string  | null: false |
-| postage           | string  | null: false |
-| shipping_date     | string  | null: false |
-| price             | integer | null: false |
-| prefecture        | integer | null: false |
+| description       | text    | null: false |
+| category_id       | integer | null: false |
+| status_id         | integer | null: false |
+| postage_id        | integer | null: false |
+| shipping_date_id  | integer | null: false |
+| price             | string  | null: false |
+| prefecture_id     | integer | null: false |
 | user              | references | null: false, foreign_key:true |
 
 belongs_to :user
@@ -48,10 +48,11 @@ belongs_to :user
 | Column            | Type       | Options     |
 | ----------------- | ---------- | ----------- |
 | postal_code       | string     | null: false  |
-| prefecture        | integer    | null: false  |
+| prefecture_i      | integer    | null: false  |
 | city              | string     | null: false  |
 | address           | string     | null: false  |
 | apartment         | string     |              |
 | phone_number      | string     | null: false  |
+| buyer             | references | null: false, foreign_key:true |
 
 belongs_to :buyer
