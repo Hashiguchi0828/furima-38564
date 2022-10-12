@@ -25,7 +25,7 @@ has_many :buyers
 | status_id         | integer | null: false |
 | postage_id        | integer | null: false |
 | shipping_date_id  | integer | null: false |
-| price             | string  | null: false |
+| price             | integer | null: false |
 | prefecture_id     | integer | null: false |
 | user              | references | null: false, foreign_key:true |
 
@@ -48,7 +48,7 @@ belongs_to :user
 | Column            | Type       | Options     |
 | ----------------- | ---------- | ----------- |
 | postal_code       | string     | null: false  |
-| prefecture_i      | integer    | null: false  |
+| prefecture_id     | integer    | null: false  |
 | city              | string     | null: false  |
 | address           | string     | null: false  |
 | apartment         | string     |              |
