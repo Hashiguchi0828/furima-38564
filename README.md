@@ -56,4 +56,3 @@ belongs_to :user
 | buyer             | references | null: false, foreign_key:true |
 
 belongs_to :buyer
-
