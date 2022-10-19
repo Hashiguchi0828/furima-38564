@@ -2,6 +2,7 @@ class Item < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
   belongs_to :user
   belongs_to :category
+  has_one_attached :image
 
   validates :name, :description, :category_id, :status_id, :postage_id, :shipping_date_id, :price, :prefecture_id, :image, presence: true
   validates :category_id, numericality: { other_than: 0, message: "can't be blank" } 
