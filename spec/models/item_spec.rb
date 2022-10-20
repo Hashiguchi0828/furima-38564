@@ -11,8 +11,13 @@ describe Item, type: :model do
       it '全ての項目が入力されていれば出品ができる' do
         expect(@item).to be_valid
       end
-    
+    end
     context '商品出品がうまくいかないとき' do
+      it '登録しているユーザーでなければ出品できない' do
+      @item.user = nil
+      @item.valid?
+      expect(@item.errors.full_messages).to include("User must exist")
+      end
       it 'imageが空では登録されない' do
         @item.image = nil
         @item.valid?
@@ -31,7 +36,7 @@ describe Item, type: :model do
         it 'category_idが空では登録されない' do
         @item.category_id = nil
         @item.valid?
-        expect(@item.errors.full_messages).to include("Category can't be blank", "Category can't be blank")
+        expect(@item.errors.full_messages).to include("Category can't be blank")
       end
         it 'status_idが空では登録されない' do
         @item.status_id = nil
@@ -53,14 +58,34 @@ describe Item, type: :model do
         @item.valid?
         expect(@item.errors.full_messages).to include("Postage can't be blank")
       end
-      it 'それぞれのidで0が選択された場合は登録されない' do
-        @item.category_id = '0'
-        @item.status_id = '0'
-        @item.shipping_date_id = '0' 
-        @item.prefecture_id = '0'
-        @item.postage_id = '0'
+      it 'カテゴリーの情報が「---」だと出品できない' do
+        @item.category_id = 0
         @item.valid?
         expect(@item.errors.full_messages).to include("Category can't be blank")
+      end
+
+      it '商品の状態の情報が「---」だと出品できない' do
+        @item.status_id = 0
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Status can't be blank")
+      end
+
+      it '配送料の負担の情報が「---」だと出品できない' do
+        @item.postage_id = 0
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Postage can't be blank")
+      end
+
+      it '発送元の地域の情報が「---」だと出品できない' do
+        @item.prefecture_id = 0
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Prefecture can't be blank")
+      end
+
+      it 'postageが未選択のままでは登録できない' do
+        @item.postage_id = '0'
+        @item.valid?
+        expect(@item.errors.full_messages).to include("Postage can't be blank")
       end
       it 'priceが空では登録されない' do
         @item.price = ""
@@ -82,8 +107,6 @@ describe Item, type: :model do
         @item.valid?
         expect(@item.errors.full_messages).to include("Price must be less than or equal to 9999999")
       end
-    end
-
     end
   end
 end
