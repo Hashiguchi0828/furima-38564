@@ -89,7 +89,7 @@ describe Item, type: :model do
       it 'priceが空では登録されない' do
         @item.price = ''
         @item.valid?
-        expect(@item.errors.full_messages).to include("Price can't be blank", 'Price is not a number')
+        expect(@item.errors.full_messages).to include("Price can't be blank")
       end
       it 'priceが半角数字以外では登録できない' do
         @item.price = '１０００'
