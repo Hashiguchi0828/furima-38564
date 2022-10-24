@@ -3,7 +3,7 @@ class BuyersController < ApplicationController
   before_action :non_purchased_item, only: [:index, :create]
 
   def index
-    if user_signed_in? && current_user.id != @item.user_id && @item.buyer == nil
+    if @item[:user_id] == current_user.id || @item.purchase.present?
     @buyer_form = BuyerForm.new
   else
     redirect_to root_path
