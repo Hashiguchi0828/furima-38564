@@ -4,10 +4,10 @@ class BuyersController < ApplicationController
 
   def index
     if @item[:user_id] == current_user.id || @item.purchase.present?
-    @buyer_form = BuyerForm.new
-  else
-    redirect_to root_path
-  end
+      @buyer_form = BuyerForm.new
+    else
+      redirect_to root_path
+    end
   end
 
   def create
@@ -15,7 +15,7 @@ class BuyersController < ApplicationController
     if @buyer_form.valid?
       pay_item
       @buyer_form.save
-      return redirect_to root_path
+      redirect_to root_path
     else
       render :index
     end
@@ -24,18 +24,22 @@ class BuyersController < ApplicationController
   private
 
   def buyer_params
-    params.require(:buyer_form).permit(:postal_code, :prefecture_id, :city, :address, :apartment, :phone_number).merge(user_id: current_user.id, item_id: params[:item_id],token: params[:token])
+    params.require(:buyer_form).permit(:postal_code, :prefecture_id, :city, :address, :apartment, :phone_number).merge(
+      user_id: current_user.id, item_id: params[:item_id], token: params[:token]
+    )
   end
+
   def non_purchased_item
     # itemがあっての、order_form（入れ子構造）。他のコントローラーで生成されたitemを使うにはcreateアクションに定義する。
     @item = Item.find(params[:item_id])
   end
+
   def pay_item
-    Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
+    Payjp.api_key = ENV['PAYJP_SECRET_KEY']
     Payjp::Charge.create(
-        amount: @item.price,
-        card: buyer_params[:token],
-        currency: 'jpy'
-      )
-    end
+      amount: @item.price,
+      card: buyer_params[:token],
+      currency: 'jpy'
+    )
+  end
 end

@@ -60,12 +60,13 @@ RSpec.describe BuyerForm, type: :model do
       it '郵便番号が空だと保存できないこと' do
         @buyer_form.postal_code = nil
         @buyer_form.valid?
-        expect(@buyer_form.errors.full_messages).to include("Postal code can't be blank", "Postal code is invalid. Include hyphen(-)")
+        expect(@buyer_form.errors.full_messages).to include("Postal code can't be blank",
+                                                            'Postal code is invalid. Include hyphen(-)')
       end
       it '郵便番号にハイフンがないと保存できないこと' do
         @buyer_form.postal_code = 1_234_567
         @buyer_form.valid?
-        expect(@buyer_form.errors.full_messages).to include("Postal code is invalid. Include hyphen(-)")
+        expect(@buyer_form.errors.full_messages).to include('Postal code is invalid. Include hyphen(-)')
       end
       it '都道府県が「---」だと保存できないこと' do
         @buyer_form.prefecture_id = 0
@@ -95,17 +96,17 @@ RSpec.describe BuyerForm, type: :model do
       it '電話番号にハイフンがあると保存できないこと' do
         @buyer_form.phone_number = '123 - 4567 - 8912'
         @buyer_form.valid?
-        expect(@buyer_form.errors.full_messages).to include("Phone number is invalid")
+        expect(@buyer_form.errors.full_messages).to include('Phone number is invalid')
       end
       it '電話番号が12桁以上あると保存できないこと' do
-        @buyer_form.phone_number = 1234567891234
+        @buyer_form.phone_number = 1_234_567_891_234
         @buyer_form.valid?
-        expect(@buyer_form.errors.full_messages).to include("Phone number is invalid")
+        expect(@buyer_form.errors.full_messages).to include('Phone number is invalid')
       end
       it '電話番号が9桁以下では保存できない' do
-        @buyer_form.phone_number = 12345678
+        @buyer_form.phone_number = 12_345_678
         @buyer_form.valid?
-        expect(@buyer_form.errors.full_messages).to include("Phone number is invalid")
+        expect(@buyer_form.errors.full_messages).to include('Phone number is invalid')
       end
       it 'トークンが空だと保存できないこと' do
         @buyer_form.token = nil
