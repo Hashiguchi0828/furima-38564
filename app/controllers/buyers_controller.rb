@@ -3,10 +3,10 @@ class BuyersController < ApplicationController
   before_action :non_purchased_item, only: [:index, :create]
 
   def index
-    if @item[:user_id] == current_user.id || @item.purchase.present?
-      @buyer_form = BuyerForm.new
-    else
+    if @item.user_id == current_user.id || @item.buyer.present?
       redirect_to root_path
+    else
+      @buyer_form = BuyerForm.new
     end
   end
 
@@ -30,7 +30,6 @@ class BuyersController < ApplicationController
   end
 
   def non_purchased_item
-    # itemがあっての、order_form（入れ子構造）。他のコントローラーで生成されたitemを使うにはcreateアクションに定義する。
     @item = Item.find(params[:item_id])
   end
 
